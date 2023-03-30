@@ -1,0 +1,74 @@
+const express=require ('express')
+const mongoose=require ('mongoose')
+const cors=require ('cors')
+
+
+//express app
+
+const app=express()
+ app.use(cors());
+ mongoose.connect('mongodb://localhost:27017/BugTracker',{
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+ }).then(()=>console.log("connected to DB")).catch(console.log("error"))
+
+ const schema=mongoose.Schema
+
+const bugschema=new schema({
+    bug_id:{
+        type:Number,
+        required:true
+    },
+    title:{
+        type:String,
+        required:true
+    },
+    description:{
+        type:String
+    },
+    due_date:{
+        type:Date
+    },
+    project:{
+        type:String
+    },
+    reporter:{
+        type:String
+    },
+    fileUrl:{
+        type:URL
+    }
+})
+const bug=mongoose.model("bugs",bugschema);
+module.exports=bug;
+
+//  const bug=require('./Model/model')
+// app.get('/bugs',async(req,res)=>{
+//     const bugs=await bug.find(); 
+//     res.json(bugs)
+//     console.log("bug works");
+// })
+//request
+
+ 
+//get
+app.get('/',(req,res)=>{
+    res.send('get method checking')
+})
+app.post('/',(req,res)=>{
+    res.send('post method checking')
+})
+app.put('/',(req,res)=>{
+    res.send('put method checking')
+})
+app.patch('/',(req,res)=>{
+    res.send('patch method checking')
+})
+app.delete('/',(req,res)=>{
+    res.send('delete method checking')
+})
+ //set port number
+ app.listen(3005,()=>{
+console.log(    "server started at port 3005"
+);
+})
