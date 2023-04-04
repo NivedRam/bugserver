@@ -25,7 +25,9 @@ const userSchema = new mongoose.Schema({
    
     reporter:String,
     
-    fileUrl:String
+    fileUrl:String,
+
+    priority:String
     
 });
 const Bug = mongoose.model('Bug', userSchema);
@@ -40,12 +42,14 @@ server.post('/demo', async (req, res) => {
     bug.project= req.body.project
     bug.reporter= req.body.reporter
     bug.fileUrl= req.body.fileUrl
+    bug.priority=req.body.priority
     
     const doc = await bug.save()
 
     console.log(doc);
     res.json(doc);
 })
+
 
 server.get('/demo', async(req,res)=>{
     const docs=await Bug.find({});
